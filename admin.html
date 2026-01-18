@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - किसान कल्याण</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&display=swap');
+        body { font-family: 'Hind', sans-serif; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-green-50 to-white min-h-screen">
+
+    <div id="login-section" class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-xl shadow-lg border border-green-100 max-w-md w-full mx-4">
+            <h2 class="text-2xl font-bold text-green-800 mb-2">Admin Login</h2>
+            <p class="text-gray-600 mb-6">कृपया पासवर्ड डालें</p>
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="password-input" placeholder="Enter admin password" 
+                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+                </div>
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg transition">
+                    Login
+                </button>
+                <a href="index.html" class="block text-center text-sm text-gray-500 hover:underline">वापस जाएं</a>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-section" class="hidden">
+        <header class="bg-green-700 text-white shadow-lg py-4">
+            <div class="container mx-auto px-4 flex items-center gap-3">
+                <i data-lucide="sprout" class="h-10 w-10"></i>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold">Admin Dashboard</h1>
+                    <p class="text-sm text-green-100">रजिस्टर्ड किसानों की जानकारी</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <a href="index.html" class="flex items-center text-green-700 font-semibold hover:underline">
+                    <i data-lucide="arrow-left" class="mr-2 h-4 w-4"></i> होम पेज
+                </a>
+                <button onclick="downloadCSV()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center shadow-md">
+                    <i data-lucide="download" class="mr-2 h-4 w-4"></i> CSV Download करें
+                </button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl border border-green-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-2 text-green-600">
+                        <i data-lucide="users" class="h-5 w-5"></i>
+                        <span class="font-bold">कुल किसान</span>
+                    </div>
+                    <p id="stat-total" class="text-4xl font-bold text-green-700">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-2 text-blue-600">
+                        <i data-lucide="leaf" class="h-5 w-5"></i>
+                        <span class="font-bold">जैविक खेती</span>
+                    </div>
+                    <p id="stat-organic" class="text-4xl font-bold text-blue-700">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-purple-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-2 text-purple-600">
+                        <i data-lucide="factory" class="h-5 w-5"></i>
+                        <span class="font-bold">हाईटेक खेती</span>
+                    </div>
+                    <p id="stat-hitech" class="text-4xl font-bold text-purple-700">0</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-gray-800">रजिस्टर्ड किसानों की सूची</h3>
+                    <button onclick="loadFarmersFromDB()" class="text-green-600 hover:rotate-180 transition-transform duration-500">
+                        <i data-lucide="refresh-cw" class="h-5 w-5"></i>
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-600 text-sm">
+                            <tr>
+                                <th class="px-6 py-4">नाम</th>
+                                <th class="px-6 py-4">मोबाइल</th>
+                                <th class="px-6 py-4">गाँव/जिला</th>
+                                <th class="px-6 py-4">तरीका</th>
+                                <th class="px-6 py-4">फसल</th>
+                                <th class="px-6 py-4">तिथि</th>
+                            </tr>
+                        </thead>
+                        <tbody id="farmer-table-body" class="divide-y divide-gray-100">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Global variable to hold data for CSV export
+        let allFarmers = [];
+
+        const API_URL = 'http://localhost:5000/api/farmers';
+
+        // 1. Auth Logic
+        const loginForm = document.getElementById('login-form');
+        const loginSection = document.getElementById('login-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pass = document.getElementById('password-input').value;
+            if (pass === 'admin123') {
+                showDashboard();
+            } else {
+                alert('गलत पासवर्ड!');
+            }
+        });
+
+        function showDashboard() {
+            loginSection.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
+            loadFarmersFromDB();
+            lucide.createIcons();
+        }
+
+        // 2. Fetch Data from MongoDB
+        async function loadFarmersFromDB() {
+            const tbody = document.getElementById('farmer-table-body');
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-gray-500">लोड हो रहा है...</td></tr>`;
+
+            try {
+                const response = await fetch(API_URL);
+                allFarmers = await response.json();
+                renderTable(allFarmers);
+            } catch (error) {
+                console.error("Error:", error);
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-red-500">सर्वर से कनेक्ट करने में विफल।</td></tr>`;
+            }
+        }
+
+        // 3. Render Table and Stats
+        function renderTable(data) {
+            const tbody = document.getElementById('farmer-table-body');
+            const totalE = document.getElementById('stat-total');
+            const organicE = document.getElementById('stat-organic');
+            const hitechE = document.getElementById('stat-hitech');
+
+            let organicCount = 0;
+            let hitechCount = 0;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-gray-500">कोई किसान नहीं मिला।</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = data.map(f => {
+                if (f.farmingMethod === "जैविक") organicCount++;
+                if (f.farmingMethod === "हाईटेक") hitechCount++;
+
+                const methodClass = f.farmingMethod === "जैविक" ? "bg-green-100 text-green-800" : 
+                                  f.farmingMethod === "हाईटेक" ? "bg-purple-100 text-purple-800" : "bg-gray-100 text-gray-800";
+
+                return `
+                    <tr class="hover:bg-gray-50 transition border-b border-gray-50">
+                        <td class="px-6 py-4 font-medium text-gray-900">${f.name}</td>
+                        <td class="px-6 py-4 text-gray-600">${f.mobile}</td>
+                        <td class="px-6 py-4 text-gray-600">${f.village}, ${f.district}</td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 rounded-full text-xs font-bold ${methodClass}">${f.farmingMethod}</span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600">${f.cropType || f.crop}</td>
+                        <td class="px-6 py-4 text-gray-600">${new Date(f.registeredAt).toLocaleDateString('hi-IN')}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            totalE.innerText = data.length;
+            organicE.innerText = organicCount;
+            hitechE.innerText = hitechCount;
+        }
+
+        // 4. CSV Export Logic (using actual DB data)
+        function downloadCSV() {
+            if (allFarmers.length === 0) {
+                alert("डाउनलोड करने के लिए कोई डाटा नहीं है।");
+                return;
+            }
+            const headers = ["नाम", "मोबाइल", "गाँव", "जिला", "तरीका", "फसल", "तिथि"];
+            const rows = allFarmers.map(f => [
+                f.name, 
+                f.mobile, 
+                f.village, 
+                f.district, 
+                f.farmingMethod, 
+                f.cropType || f.crop, 
+                new Date(f.registeredAt).toLocaleDateString('hi-IN')
+            ]);
+            
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF" // Added BOM for Excel Hindi support
+                + [headers, ...rows].map(e => e.join(",")).join("\n");
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `farmers_list_${new Date().toLocaleDateString()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
