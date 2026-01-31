@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>किसान रजिस्ट्रेशन - अखिल भारतीय किसान कल्याण</title>
+    <title class="en">किसान रजिस्ट्रेशन - अखिल भारतीय किसान कल्याण</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -17,6 +17,21 @@
         .hidden {
             display: none;
         }
+
+        /* Default: show Hindi */
+        .org-name .en {
+          display: none;
+        }
+        
+        /* After Google/Chrome translates page to English */
+        html[lang="en"] .org-name .hi {
+          display: none;
+        }
+        
+        html[lang="en"] .org-name .en {
+          display: inline;
+        }
+        
     </style>
 </head>
 
@@ -38,7 +53,10 @@
             <div class="container mx-auto px-4 flex items-center gap-3">
                 <i data-lucide="sprout" class="h-10 w-10"></i>
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold">अखिल भारतीय किसान कल्याण सेवा समिति</h1>
+                    <h2 class="text-4xl font-black mb-4 uppercase org-name">
+                      <span class="hi" lang="hi">अखिल भारतीय किसान कल्याण सेवा समिति</span>
+                      <span class="en">Akhil Bhartiya Kisan Kalyan Seva Samiti</span>
+                    </h2>
                     <p class="text-sm text-green-100">किसान रजिस्ट्रेशन फॉर्म</p>
                 </div>
             </div>
