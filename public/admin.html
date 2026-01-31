@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,22 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&display=swap');
-        body { font-family: 'Hind', sans-serif; }
-        .hidden { display: none; }
+
+        body {
+            font-family: 'Hind', sans-serif;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .active-tab {
+            border-bottom: 3px solid #16a34a;
+            color: #16a34a;
+        }
     </style>
 </head>
+
 <body class="bg-gradient-to-b from-green-50 to-white min-h-screen">
 
     <div id="login-section" class="flex items-center justify-center min-h-screen">
@@ -22,9 +35,10 @@
             <h2 class="text-2xl font-bold text-green-800 mb-2">Admin Login</h2>
             <p class="text-gray-600 mb-6">डैशबोर्ड देखने के लिए पासवर्ड डालें</p>
             <form id="login-form" class="space-y-4">
-                <input type="password" id="password-input" placeholder="Password" required 
-                       class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-center">
-                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition shadow-md">
+                <input type="password" id="password-input" placeholder="Password" required
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none text-center">
+                <button type="submit"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition shadow-md">
                     Login
                 </button>
                 <a href="index.html" class="block text-sm text-gray-500 hover:underline pt-2">होम पेज पर वापस जाएं</a>
@@ -45,53 +59,135 @@
             </div>
         </header>
 
-        <main class="container mx-auto px-4 py-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800">डेटा ओवरव्यू</h2>
-                    <p class="text-gray-600">पंजीकृत किसानों की सूची और आंकड़े</p>
-                </div>
-                <button onclick="downloadCSV()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center shadow-lg transition transform active:scale-95">
-                    <i data-lucide="file-spreadsheet" class="mr-2 h-5 w-5"></i> Excel (CSV) डाउनलोड करें
+        <nav class="bg-white border-b border-gray-200 sticky top-0 z-10">
+            <div class="container mx-auto px-4 flex gap-6">
+                <button onclick="switchTab('data')" id="tab-data"
+                    class="py-4 px-2 font-bold flex items-center gap-2 transition active-tab">
+                    <i data-lucide="database" class="h-4 w-4"></i> किसान डेटा
+                </button>
+                <button onclick="switchTab('blog')" id="tab-blog"
+                    class="py-4 px-2 text-gray-500 hover:text-green-600 font-bold flex items-center gap-2 transition">
+                    <i data-lucide="pen-tool" class="h-4 w-4"></i> ब्लॉग लिखें
+                </button>
+                <button onclick="switchTab('gallery')" id="tab-gallery"
+                    class="py-4 px-2 text-gray-500 hover:text-green-600 font-bold flex items-center gap-2 transition">
+                    <i data-lucide="image" class="h-4 w-4"></i> गैलरी (Image)
                 </button>
             </div>
+        </nav>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-xl border-l-4 border-green-500 shadow-sm">
-                    <p class="text-gray-500 text-sm font-bold uppercase">कुल किसान</p>
-                    <p id="stat-total" class="text-3xl font-bold text-gray-800">0</p>
+        <main class="container mx-auto px-4 py-8">
+
+            <div id="section-data">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">डेटा ओवरव्यू</h2>
+                        <p class="text-gray-600">पंजीकृत किसानों की सूची और आंकड़े</p>
+                    </div>
+                    <button onclick="downloadCSV()"
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg flex items-center shadow-lg transition transform active:scale-95">
+                        <i data-lucide="file-spreadsheet" class="mr-2 h-5 w-5"></i> Excel (CSV) डाउनलोड करें
+                    </button>
                 </div>
-                <div class="bg-white p-6 rounded-xl border-l-4 border-blue-500 shadow-sm">
-                    <p class="text-gray-500 text-sm font-bold uppercase">जैविक (Organic)</p>
-                    <p id="stat-organic" class="text-3xl font-bold text-gray-800">0</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-green-500 shadow-sm">
+                        <p class="text-gray-500 text-sm font-bold uppercase">कुल किसान</p>
+                        <p id="stat-total" class="text-3xl font-bold text-gray-800">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-blue-500 shadow-sm">
+                        <p class="text-gray-500 text-sm font-bold uppercase">जैविक (Organic)</p>
+                        <p id="stat-organic" class="text-3xl font-bold text-gray-800">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-purple-500 shadow-sm">
+                        <p class="text-gray-500 text-sm font-bold uppercase">आधुनिक (Hi-tech)</p>
+                        <p id="stat-hitech" class="text-3xl font-bold text-gray-800">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border-l-4 border-orange-500 shadow-sm">
+                        <p class="text-gray-500 text-sm font-bold uppercase">सिंचित भूमि</p>
+                        <p id="stat-irrigated" class="text-3xl font-bold text-gray-800">0</p>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl border-l-4 border-purple-500 shadow-sm">
-                    <p class="text-gray-500 text-sm font-bold uppercase">आधुनिक (Hi-tech)</p>
-                    <p id="stat-hitech" class="text-3xl font-bold text-gray-800">0</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl border-l-4 border-orange-500 shadow-sm">
-                    <p class="text-gray-500 text-sm font-bold uppercase">सिंचित भूमि</p>
-                    <p id="stat-irrigated" class="text-3xl font-bold text-gray-800">0</p>
+
+                <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-600 text-xs uppercase font-bold border-b">
+                                    <th class="px-6 py-4">किसान & पिता</th>
+                                    <th class="px-6 py-4">मोबाइल/आधार</th>
+                                    <th class="px-6 py-4">पता (गाँव/ब्लॉक)</th>
+                                    <th class="px-6 py-4">खेती का विवरण</th>
+                                    <th class="px-6 py-4">तरीका</th>
+                                    <th class="px-6 py-4">कोऑर्डिनेटर</th>
+                                    <th class="px-6 py-4">तारीख</th>
+                                </tr>
+                            </thead>
+                            <tbody id="farmer-table-body" class="divide-y divide-gray-100 text-sm"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gray-50 text-gray-600 text-xs uppercase font-bold border-b">
-                                <th class="px-6 py-4">किसान & पिता</th>
-                                <th class="px-6 py-4">मोबाइल/आधार</th>
-                                <th class="px-6 py-4">पता (गाँव/ब्लॉक)</th>
-                                <th class="px-6 py-4">खेती का विवरण</th>
-                                <th class="px-6 py-4">तरीका</th>
-                                <th class="px-6 py-4">कोऑर्डिनेटर</th>
-                                <th class="px-6 py-4">तारीख</th>
-                            </tr>
-                        </thead>
-                        <tbody id="farmer-table-body" class="divide-y divide-gray-100 text-sm">
-                            </tbody>
-                    </table>
+            <div id="section-blog" class="hidden">
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <i data-lucide="pen-tool" class="text-green-600"></i> नया ब्लॉग पोस्ट करें
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">ब्लॉग शीर्षक
+                                (Hindi/English)</label>
+                            <input type="text" placeholder="उदाहरण: जैविक खेती के फायदे"
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">ब्लॉग की सामग्री</label>
+                            <textarea rows="8" placeholder="यहाँ विस्तार से जानकारी लिखें..."
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"></textarea>
+                        </div>
+                        <button
+                            class="bg-green-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-700 shadow-md transition">पब्लिश
+                            करें</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-gallery" class="hidden">
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                            <i data-lucide="image-plus" class="text-green-600"></i> गैलरी में फोटो जोड़ें
+                        </h2>
+                        <a href="https://postimages.org/" target="_blank"
+                            class="text-blue-600 text-sm font-bold hover:underline flex items-center gap-1">
+                            <i data-lucide="external-link" class="h-4 w-4"></i> फोटो यहाँ से अपलोड करें (Get URL)
+                        </a>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">फोटो का सीधा URL (Direct
+                                    Link)</label>
+                                <input type="text" id="gallery-url" placeholder="https://i.postimg.cc/image.jpg"
+                                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">फोटो का शीर्षक</label>
+                                <input type="text" id="gallery-title" placeholder="उदाहरण: किसान संगोष्ठी 2024"
+                                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+                            </div>
+                        </div>
+
+                        <button onclick="saveToGallery()" id="gallery-btn"
+                            class="w-full bg-green-600 text-white py-4 rounded-lg font-bold hover:bg-green-700 shadow-md transition flex items-center justify-center gap-2">
+                            <i data-lucide="upload" class="h-5 w-5"></i> गैलरी अपडेट करें
+                        </button>
+                    </div>
+
+                    <div id="gallery-preview" class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 border-t pt-8">
+                    </div>
                 </div>
             </div>
         </main>
@@ -99,17 +195,16 @@
 
     <script>
         let allFarmers = [];
-        // Use relative URL for Vercel
         const API_URL = '/api/farmers';
 
         const loginForm = document.getElementById('login-form');
         const loginSection = document.getElementById('login-section');
         const dashboardSection = document.getElementById('dashboard-section');
 
+        // Handle Login
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const pass = document.getElementById('password-input').value;
-            // Your password remains admin123
             if (pass === 'admin123') {
                 showDashboard();
             } else {
@@ -124,6 +219,23 @@
             lucide.createIcons();
         }
 
+        // Tab Switching Logic
+        function switchTab(tab) {
+            const sections = ['data', 'blog', 'gallery'];
+            sections.forEach(s => {
+                document.getElementById(`section-${s}`).classList.add('hidden');
+                document.getElementById(`tab-${s}`).classList.remove('active-tab', 'text-green-600');
+                document.getElementById(`tab-${s}`).classList.add('text-gray-500');
+            });
+
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).classList.add('active-tab', 'text-green-600');
+            document.getElementById(`tab-${tab}`).classList.remove('text-gray-500');
+
+            lucide.createIcons();
+        }
+
+        // Load Data from API
         async function loadFarmersFromDB() {
             const tbody = document.getElementById('farmer-table-body');
             tbody.innerHTML = `<tr><td colspan="7" class="text-center py-20"><div class="animate-spin inline-block w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full"></div></td></tr>`;
@@ -147,13 +259,12 @@
             }
 
             tbody.innerHTML = data.map(f => {
-                // Count Stats
                 if (f.farmingMethod === "Organic" || f.farmingMethod === "जैविक") organic++;
                 if (f.farmingMethod === "High-tech" || f.farmingMethod === "हाईटेक") hitech++;
                 if (f.landType === "Irrigated") irrigated++;
 
-                const methodColor = (f.farmingMethod === "Organic" || f.farmingMethod === "जैविक") ? "bg-green-100 text-green-700" : 
-                                  (f.farmingMethod === "High-tech" || f.farmingMethod === "हाईटेक") ? "bg-purple-100 text-purple-700" : "bg-gray-100 text-gray-700";
+                const methodColor = (f.farmingMethod === "Organic" || f.farmingMethod === "जैविक") ? "bg-green-100 text-green-700" :
+                    (f.farmingMethod === "High-tech" || f.farmingMethod === "हाईटेक") ? "bg-purple-100 text-purple-700" : "bg-gray-100 text-gray-700";
 
                 return `
                     <tr class="hover:bg-gray-50 transition">
@@ -190,17 +301,61 @@
             document.getElementById('stat-irrigated').innerText = irrigated;
         }
 
+        // --- GALLERY SAVE LOGIC ---
+        async function saveToGallery() {
+            const urlInput = document.getElementById('gallery-url');
+            const titleInput = document.getElementById('gallery-title');
+            const btn = document.getElementById('gallery-btn');
+
+            if (!urlInput.value || !titleInput.value) {
+                alert("कृपया फोटो का URL और शीर्षक दोनों भरें।");
+                return;
+            }
+
+            // Basic URL validation
+            if (!urlInput.value.startsWith('http')) {
+                alert("कृपया एक सही URL डालें (http:// या https:// से शुरू होने वाला)");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = `<div class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div> सेव हो रहा है...`;
+
+            try {
+                const response = await fetch('/api/gallery', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        url: urlInput.value,
+                        title: titleInput.value
+                    })
+                });
+
+                if (response.ok) {
+                    alert("✅ फोटो गैलरी में जोड़ दी गई है!");
+                    urlInput.value = '';
+                    titleInput.value = '';
+                    // Optional: Refresh a local preview if you build one
+                } else {
+                    alert("❌ फोटो सेव नहीं हो सकी।");
+                }
+            } catch (error) {
+                console.error("Gallery Error:", error);
+                alert("सर्वर एरर!");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i data-lucide="upload" class="h-5 w-5"></i> गैलरी अपडेट करें`;
+                lucide.createIcons();
+            }
+        }
+
         function downloadCSV() {
             if (allFarmers.length === 0) return alert("डाटा उपलब्ध नहीं है");
-            
             const headers = ["Name", "Father Name", "Mobile", "Aadhar (Last 4)", "Village", "Block", "District", "State", "Farm Size", "Land Type", "Crop", "Method", "Coordinator", "Date"];
             const rows = allFarmers.map(f => [
                 f.name, f.fatherName, f.mobile, f.aadharLast4, f.village, f.block, f.district, f.state, f.farmSize, f.landType, f.cropType, f.farmingMethod, f.coordinatorName, new Date(f.registeredAt).toLocaleDateString('hi-IN')
             ]);
-
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
-                + [headers, ...rows].map(e => e.join(",")).join("\n");
-
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF" + [headers, ...rows].map(e => e.join(",")).join("\n");
             const link = document.createElement("a");
             link.setAttribute("href", encodeURI(csvContent));
             link.setAttribute("download", `Farmers_Export_${new Date().toISOString().split('T')[0]}.csv`);
@@ -209,7 +364,10 @@
             document.body.removeChild(link);
         }
 
+
+
         lucide.createIcons();
     </script>
 </body>
+
 </html>
