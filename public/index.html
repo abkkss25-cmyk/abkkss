@@ -38,6 +38,21 @@
         }
         .goog-te-menu-value span { color: white !important; font-size: 13px !important; font-weight: 600 !important; }
         body { top: 0px !important; }
+
+        /* Default: show Hindi */
+        .org-name .en {
+          display: none;
+        }
+
+        /* After Google/Chrome translates page to English */
+        html[lang="en"] .org-name .hi {
+          display: none;
+        }
+        
+        html[lang="en"] .org-name .en {
+          display: inline;
+        }
+
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
@@ -176,7 +191,10 @@
         <div class="container mx-auto px-4 text-center">
             <div class="flex flex-col items-center mb-16">
                 <i data-lucide="sprout" class="h-16 w-16 text-green-500 mb-6"></i>
-                <h2 class="text-4xl font-black mb-4 uppercase" lang="hi">अखिल भारतीय किसान कल्याण सेवा समिति  </h2> 
+                <h2 class="text-4xl font-black mb-4 uppercase org-name">
+                  <span class="hi" lang="hi">अखिल भारतीय किसान कल्याण सेवा समिति</span>
+                  <span class="en">Akhil Bhartiya Kisan Kalyan Seva Samiti</span>
+                </h2>
                 <p class="text-orange-400 font-bold text-xl italic">"कृषि का मूल धर्म – प्रकृति के अनुरूप जीवन"</p>
             </div>
             
