@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गैलरी | ABKKSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&display=swap');
+        body { font-family: 'Hind', sans-serif; }
+        .glass-nav { background: rgba(21, 128, 61, 0.95); backdrop-filter: blur(10px); }
+        .gallery-item:hover img { transform: scale(1.1); }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 text-white glass-nav shadow-lg">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-white p-2 rounded-xl"><i data-lucide="image" class="h-6 w-6 text-green-700"></i></div>
+                <h1 class="text-xl font-black uppercase">ABKKSS <span class="text-orange-400">गैलरी</span></h1>
+            </div>
+            <a href="/" class="hover:text-orange-400 font-bold text-xs uppercase tracking-widest">होम</a>
+        </div>
+    </header>
+
+    <section class="pt-32 pb-16 bg-green-900 text-white rounded-b-[50px]">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-black mb-4 uppercase">हमारी <span class="text-orange-400">झलकियाँ</span></h2>
+            <p class="text-green-100 opacity-80">किसान कार्यक्रमों और क्षेत्रीय गतिविधियों की तस्वीरें</p>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-4 py-16">
+        <div id="loader" class="flex flex-col items-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mb-4"></div>
+        </div>
+
+        <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+    </main>
+
+    <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-10 right-10 text-white hover:text-orange-500">
+            <i data-lucide="x" class="h-10 w-10"></i>
+        </button>
+        <img id="lightbox-img" src="" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl">
+        <h3 id="lightbox-caption" class="absolute bottom-10 text-white text-xl font-bold"></h3>
+    </div>
+
+    <script>
+    lucide.createIcons();
+
+    async function loadGallery() {
+        const grid = document.getElementById('gallery-grid');
+        const loader = document.getElementById('loader');
+
+        try {
+            loader.classList.remove('hidden');
+
+            // 🔗 API endpoint (server se images)
+            const response = await fetch('/api/gallery');
+
+            if (!response.ok) {
+                throw new Error('Server error');
+            }
+
+            const images = await response.json();
+
+            loader.classList.add('hidden');
+
+            if (!Array.isArray(images) || images.length === 0) {
+                grid.innerHTML = `
+                    <p class="col-span-full text-center text-slate-400 font-bold">
+                        अभी कोई फोटो मौजूद नहीं है।
+                    </p>`;
+                return;
+            }
+
+            grid.innerHTML = images.map(img => `
+                <div 
+                    class="gallery-item group relative h-72 bg-slate-200 rounded-3xl overflow-hidden cursor-pointer shadow-md border border-white"
+                    onclick="openLightbox('${img.url}', '${img.title || 'कार्यक्रम'}')"
+                >
+                    <img 
+                        src="${img.url}" 
+                        alt="${img.title || 'Gallery Image'}"
+                        class="w-full h-full object-cover transition-transform duration-500"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                        <p class="text-white font-bold text-lg">
+                            ${img.title || 'कार्यक्रम'}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+
+        } catch (error) {
+            console.error('Gallery load error:', error);
+            loader.classList.add('hidden');
+            grid.innerHTML = `
+                <p class="col-span-full text-center text-red-500 font-bold">
+                    गैलरी लोड नहीं हो पाई।
+                </p>`;
+        }
+    }
+
+    function openLightbox(url, title) {
+        const lightbox = document.getElementById('lightbox');
+        document.getElementById('lightbox-img').src = url;
+        document.getElementById('lightbox-caption').innerText = title;
+        lightbox.classList.remove('hidden');
+        lightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.style.display = 'none';
+        lightbox.classList.add('hidden');
+    }
+
+    window.onload = loadGallery;
+</script>
+
+</body>
+</html> 
