@@ -41,6 +41,7 @@
                     class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition shadow-md">
                     Login
                 </button>
+
                 <a href="index.html" class="block text-sm text-gray-500 hover:underline pt-2">होम पेज पर वापस जाएं</a>
             </form>
         </div>
@@ -73,7 +74,12 @@
                     class="py-4 px-2 text-gray-500 hover:text-green-600 font-bold flex items-center gap-2 transition">
                     <i data-lucide="image" class="h-4 w-4"></i> गैलरी (Image)
                 </button>
+                <button onclick="switchTab('settings')" id="tab-settings"
+                    class="py-4 px-2 text-gray-500 hover:text-green-600 font-bold flex items-center gap-2 transition">
+                    <i data-lucide="settings" class="h-4 w-4"></i> सेटिंग्स
+                </button>
             </div>
+
         </nav>
 
         <main class="container mx-auto px-4 py-8">
@@ -190,6 +196,27 @@
                     </div>
                 </div>
             </div>
+            <div id="section-settings" class="hidden">
+                <div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-md border">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="lock" class="text-green-600"></i> पासवर्ड बदलें
+                    </h2>
+
+                    <div class="space-y-4">
+                        <input id="oldPass" type="password" placeholder="पुराना पासवर्ड"
+                            class="w-full px-4 py-2 border rounded-lg">
+
+                        <input id="newPass" type="password" placeholder="नया पासवर्ड"
+                            class="w-full px-4 py-2 border rounded-lg">
+
+                        <button onclick="updatePassword()"
+                            class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold">
+                            अपडेट करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -202,15 +229,31 @@
         const dashboardSection = document.getElementById('dashboard-section');
 
         // Handle Login
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const pass = document.getElementById('password-input').value;
-            if (pass === 'admin123') {
-                showDashboard();
-            } else {
-                alert('गलत पासवर्ड!');
+
+            const password = document.getElementById('password-input').value;
+
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password
+                    })
+                });
+
+                if (res.ok) {
+                    showDashboard();
+                } else {
+                    alert('गलत पासवर्ड!');
+                }
+            } catch (err) {
+                alert('Server error');
             }
         });
+
 
         function showDashboard() {
             loginSection.classList.add('hidden');
@@ -221,7 +264,7 @@
 
         // Tab Switching Logic
         function switchTab(tab) {
-            const sections = ['data', 'blog', 'gallery'];
+            const sections = ['data', 'blog', 'gallery', 'settings'];
             sections.forEach(s => {
                 document.getElementById(`section-${s}`).classList.add('hidden');
                 document.getElementById(`tab-${s}`).classList.remove('active-tab', 'text-green-600');
@@ -348,6 +391,39 @@
                 lucide.createIcons();
             }
         }
+
+        //password update 
+        async function updatePassword() {
+            const oldPassword = document.getElementById('oldPass').value;
+            const newPassword = document.getElementById('newPass').value;
+
+            if (!oldPassword || !newPassword) {
+                alert('दोनों पासवर्ड भरें');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/admin/update-password', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        oldPassword,
+                        newPassword
+                    })
+                });
+
+                if (res.ok) {
+                    alert('✅ पासवर्ड सफलतापूर्वक बदल दिया गया');
+                    document.getElementById('oldPass').value = '';
+                    document.getElementById('newPass').value = '';
+                } else {
+                    alert('❌ पुराना पासवर्ड गलत है');
+                }
+            } catch (err) {
+                alert('Server error');
+            }
+        }
+
 
         function downloadCSV() {
             if (allFarmers.length === 0) return alert("डाटा उपलब्ध नहीं है");
