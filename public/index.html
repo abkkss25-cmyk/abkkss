@@ -12,17 +12,17 @@
         
         body { font-family: 'Hind', sans-serif; scroll-behavior: smooth; }
         
-        /* Hero Section with overlay adjustment */
+        /* Hero Section */
         .hero-bg {
             background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1567471945805-069e09c11098?auto=format&fit=crop&q=80');
             background-size: cover;
             background-position: center;
         }
 
-        /* Better Navbar glassmorphism */
+        /* Navbar glassmorphism */
         .nav-scrolled {
             background-color: rgba(21, 128, 61, 0.95) !important;
-            backdrop-blur: 10px;
+            backdrop-filter: blur(10px);
             padding-top: 0.75rem !important;
             padding-bottom: 0.75rem !important;
         }
@@ -39,32 +39,21 @@
         .goog-te-menu-value span { color: white !important; font-size: 13px !important; font-weight: 600 !important; }
         body { top: 0px !important; }
 
-        /* Default: show Hindi */
-        .org-name .en {
-          display: none;
+        /* Multilingual Support */
+        .org-name .en { display: none; }
+        html[lang="en"] .org-name .hi { display: none; }
+        html[lang="en"] .org-name .en { display: inline; }
+
+        /* Mobile Spacing for Fixed Nav */
+        @media (max-width: 1024px) {
+            body { padding-bottom: 5rem; }
         }
-
-        /* After Google/Chrome translates page to English */
-        html[lang="en"] .org-name .hi {
-          display: none;
-        }
-        
-        html[lang="en"] .org-name .en {
-          display: inline;
-        }
-
-
-    @media (max-width: 1024px) {
-        body { padding-bottom: 4rem; }
-    }
-
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
 
     <header id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 px-4 py-6 text-white">
         <div class="container mx-auto flex items-center justify-between">
-            
             <div class="flex items-center gap-3 group">
                 <div class="bg-white p-2 rounded-xl shadow-lg transform group-hover:scale-110 transition-transform">
                     <i data-lucide="sprout" class="h-7 w-7 text-green-700"></i>
@@ -79,56 +68,45 @@
                 <a href="#" class="hover:text-orange-400 transition-colors">होम</a>
                 <a href="about_us.html" class="hover:text-orange-400 transition-colors">हमारे बारे में</a>
                 <a href="#vision" class="hover:text-orange-400 transition-colors">दृष्टिकोण</a>
-                <a href="#mission" class="hover:text-orange-400 transition-colors">मिशन</a>
-                <a href="#commitment" class="hover:text-orange-400 transition-colors">प्रतिबद्धता</a>
                 <a href="blog.html" class="hover:text-orange-400 transition-colors">ब्लॉग</a>
                 <a href="gallery.html" class="hover:text-orange-400 transition-colors">गैलरी</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="register.html" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-xl transition-all hover:-translate-y-1 active:scale-95">
+                <div id="google_translate_element" class="hidden sm:block"></div>
+                <a href="register.html" class="hidden sm:block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-xl transition-all hover:-translate-y-1">
                     रजिस्ट्रेशन
                 </a>
-                
-                <button id="menu-btn" class="lg:hidden p-2 bg-white/10 rounded-lg">
-                    <i data-lucide="menu" class="h-6 w-6"></i>
-                </button>
             </div>
         </div>
-
-        <div class="lg:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-slate-200 flex items-center justify-around px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-    <a href="#" class="flex flex-col items-center justify-center text-green-700">
-        <i data-lucide="home" class="h-5 w-5"></i>
-        <span class="text-[10px] font-bold mt-1 uppercase">होम</span>
-    </a>
-    <a href="about_us.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
-        <i data-lucide="info" class="h-5 w-5"></i>
-        <span class="text-[10px] font-bold mt-1 uppercase">बारे में</span>
-    </a>
-    
-    <a href="register.html" class="relative -top-5 flex flex-col items-center justify-center">
-        <div class="bg-orange-500 p-4 rounded-full shadow-lg border-4 border-slate-50 text-white">
-            <i data-lucide="user-plus" class="h-6 w-6"></i>
-        </div>
-        <span class="text-[10px] font-bold mt-1 text-orange-600 uppercase">रजिस्ट्रेशन</span>
-    </a>
-
-    <a href="gallery.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
-        <i data-lucide="image" class="h-5 w-5"></i>
-        <span class="text-[10px] font-bold mt-1 uppercase">गैलरी</span>
-    </a>
-    <a href="blog.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
-        <i data-lucide="book-open" class="h-5 w-5"></i>
-        <span class="text-[10px] font-bold mt-1 uppercase">ब्लॉग</span>
-    </a>
-    <a href="admin.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
-        <i data-lucide="book-open" class="h-5 w-5"></i>
-        <span class="text-[10px] font-bold mt-1 uppercase">Admin login</span>
-    </a>
-</div>
-
-
     </header>
+
+    <div class="lg:hidden fixed bottom-0 left-0 z-50 w-full h-20 bg-white border-t border-slate-200 flex items-center justify-around px-2 shadow-[0_-4px_15px_rgba(0,0,0,0.1)]">
+        <a href="#" class="flex flex-col items-center justify-center text-green-700">
+            <i data-lucide="home" class="h-6 w-6"></i>
+            <span class="text-[10px] font-bold mt-1 uppercase">होम</span>
+        </a>
+        <a href="about_us.html" class="flex flex-col items-center justify-center text-slate-500">
+            <i data-lucide="info" class="h-6 w-6"></i>
+            <span class="text-[10px] font-bold mt-1 uppercase">बारे में</span>
+        </a>
+        
+        <a href="register.html" class="relative -top-6 flex flex-col items-center justify-center">
+            <div class="bg-orange-500 p-4 rounded-full shadow-2xl border-4 border-slate-50 text-white">
+                <i data-lucide="user-plus" class="h-7 w-7"></i>
+            </div>
+            <span class="text-[10px] font-bold mt-1 text-orange-600 uppercase tracking-tighter">रजिस्ट्रेशन</span>
+        </a>
+
+        <a href="gallery.html" class="flex flex-col items-center justify-center text-slate-500">
+            <i data-lucide="image" class="h-6 w-6"></i>
+            <span class="text-[10px] font-bold mt-1 uppercase">गैलरी</span>
+        </a>
+        <a href="admin.html" class="flex flex-col items-center justify-center text-slate-500">
+            <i data-lucide="lock" class="h-6 w-6"></i>
+            <span class="text-[10px] font-bold mt-1 uppercase">एडमिन</span>
+        </a>
+    </div>
 
     <section class="relative min-h-screen flex items-center justify-center text-center hero-bg px-4">
         <div class="relative z-10 max-w-5xl">
@@ -145,14 +123,11 @@
                 <a href="register.html" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white text-lg px-12 py-5 rounded-full font-bold transition-all shadow-2xl flex items-center justify-center gap-3">
                     किसान रजिस्ट्रेशन <i data-lucide="arrow-right-circle"></i>
                 </a>
-                <a href="#about" class="w-full sm:w-auto bg-white/10 backdrop-blur-md border border-white/30 text-white px-12 py-5 rounded-full font-bold hover:bg-white/20 transition-all">
-                    अधिक जानें
-                </a>
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-32 bg-white relative overflow-hidden">
+    <section id="about" class="py-24 bg-white">
         <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
             <div class="relative">
                 <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80" class="rounded-[40px] shadow-2xl" alt="Farmers">
@@ -163,72 +138,62 @@
             </div>
             <div>
                 <span class="text-orange-500 font-black tracking-widest uppercase text-sm block mb-4">हमारी संस्था</span>
-                <h2 class="text-5xl font-bold text-green-900 mb-8 leading-tight">किसानों के कल्याण के लिए समर्पित एक अभियान</h2>
-                <p class="text-gray-600 text-xl leading-relaxed mb-8">
-                    अखिल भारतीय किसान कल्याण सेवा समिति एक समर्पित संस्था है जो भारत के ग्रामीण अंचलों में जैविक और प्राकृतिक खेती को पुनर्जीवित करने के लिए कार्यरत है। हमारा मुख्य उद्देश्य किसानों को आधुनिक तकनीकों और प्राचीन ज्ञान के संगम से सशक्त बनाना है।
+                <h2 class="text-4xl font-bold text-green-900 mb-8 leading-tight">किसानों के कल्याण के लिए समर्पित एक अभियान</h2>
+                <p class="text-gray-600 text-xl leading-relaxed">
+                    अखिल भारतीय किसान कल्याण सेवा समिति एक समर्पित संस्था है जो भारत के ग्रामीण अंचलों में जैविक और प्राकृतिक खेती को पुनर्जीवित करने के लिए कार्यरत है।
                 </p>
-                <div class="flex items-center gap-4 text-green-800 font-bold">
-                    <div class="p-3 bg-green-100 rounded-full"><i data-lucide="check" class="h-6 w-6"></i></div>
-                    <span>प्रमाणित प्राकृतिक कृषि परामर्श</span>
-                </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 bg-green-900 text-white rounded-[60px] mx-4 my-10 shadow-3xl">
+    <section class="py-24 bg-green-900 text-white rounded-[60px] mx-4 my-10 shadow-3xl">
         <div class="container mx-auto px-4">
             <div class="grid lg:grid-cols-3 gap-12">
-                
                 <div id="vision" class="space-y-6 p-4">
-                    <div class="bg-orange-500 w-16 h-16 rounded-3xl flex items-center justify-center shadow-lg">
+                    <div class="bg-orange-500 w-16 h-16 rounded-3xl flex items-center justify-center">
                         <i data-lucide="eye" class="h-8 w-8 text-white"></i>
                     </div>
                     <h3 class="text-3xl font-bold">दृष्टिकोण</h3>
-                    <p class="text-green-100 text-lg opacity-80">भारत को एक स्वावलंबी, समृद्ध और रसायन-मुक्त कृषि राष्ट्र बनाना। हम चाहते हैं कि हर किसान अपनी मिट्टी को स्वस्थ रखे और आने वाली पीढ़ी को जहर मुक्त भोजन मिले।</p>
+                    <p class="text-green-100 opacity-80">भारत को एक स्वावलंबी, समृद्ध और रसायन-मुक्त कृषि राष्ट्र बनाना।</p>
                 </div>
 
                 <div id="mission" class="space-y-6 p-4 lg:border-l lg:border-green-800 lg:pl-12">
-                    <div class="bg-blue-500 w-16 h-16 rounded-3xl flex items-center justify-center shadow-lg">
+                    <div class="bg-blue-500 w-16 h-16 rounded-3xl flex items-center justify-center">
                         <i data-lucide="target" class="h-8 w-8 text-white"></i>
                     </div>
                     <h3 class="text-3xl font-bold">हमारा मिशन</h3>
-                    <ul class="space-y-5">
-                        <li class="flex items-center gap-4 text-green-100"><i data-lucide="check-circle" class="text-orange-400"></i> जैविक खेती हेतु प्रेरणा</li>
-                        <li class="flex items-center gap-4 text-green-100"><i data-lucide="check-circle" class="text-orange-400"></i> प्राकृतिक खेती का विस्तार</li>
-                        <li class="flex items-center gap-4 text-green-100"><i data-lucide="check-circle" class="text-orange-400"></i> किसानों की आय में 2X वृद्धि</li>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-orange-400 h-5 w-5"></i> जैविक खेती हेतु प्रेरणा</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-orange-400 h-5 w-5"></i> किसानों की आय में 2X वृद्धि</li>
                     </ul>
                 </div>
 
                 <div id="commitment" class="space-y-6 p-4 lg:border-l lg:border-green-800 lg:pl-12">
-                    <div class="bg-green-500 w-16 h-16 rounded-3xl flex items-center justify-center shadow-lg">
+                    <div class="bg-green-500 w-16 h-16 rounded-3xl flex items-center justify-center">
                         <i data-lucide="users" class="h-8 w-8 text-white"></i>
                     </div>
                     <h3 class="text-3xl font-bold">प्रतिबद्धता</h3>
-                    <p class="text-green-100 text-lg opacity-80">हम युवा पीढ़ी को आधुनिक लेकिन प्राकृतिक कृषि से जोड़ने और शुद्ध खाद के उपयोग हेतु 24/7 समर्पित हैं।</p>
-                    <div class="pt-4">
-                        <span class="px-5 py-2 bg-white/10 rounded-full text-xs font-bold border border-white/20">#जागरूक_किसान</span>
-                    </div>
+                    <p class="text-green-100 opacity-80">हम युवा पीढ़ी को आधुनिक लेकिन प्राकृतिक कृषि से जोड़ने हेतु समर्पित हैं।</p>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <footer class="bg-slate-900 text-white pt-32 pb-10">
+    <footer class="bg-slate-900 text-white pt-24 pb-32 lg:pb-10">
         <div class="container mx-auto px-4 text-center">
             <div class="flex flex-col items-center mb-16">
                 <i data-lucide="sprout" class="h-16 w-16 text-green-500 mb-6"></i>
-                <h2 class="text-4xl font-black mb-4 uppercase org-name">
+                <h2 class="text-3xl font-black mb-4 uppercase org-name">
                   <span class="hi" lang="hi">अखिल भारतीय किसान कल्याण सेवा समिति</span>
                   <span class="en">Akhil Bhartiya Kisan Kalyan Seva Samiti</span>
                 </h2>
-                <p class="text-orange-400 font-bold text-xl italic">"कृषि का मूल धर्म – प्रकृति के अनुरूप जीवन"</p>
+                <p class="text-orange-400 font-bold italic">"कृषि का मूल धर्म – प्रकृति के अनुरूप जीवन"</p>
             </div>
             
-            <div class="flex justify-center gap-12 mb-16 font-bold text-sm uppercase tracking-widest text-slate-400">
-                <a href="terms.html" class="hover:text-white transition-colors">नियम</a>
-                <a href="privacy.html" class="hover:text-white transition-colors">गोपनीयता</a>
-                <a href="admin.html" class="hover:text-white transition-colors">एडमिन</a>
+            <div class="flex justify-center gap-8 mb-16 font-bold text-xs uppercase tracking-widest text-slate-400">
+                <a href="terms.html">नियम</a>
+                <a href="privacy.html">गोपनीयता</a>
+                <a href="admin.html">एडमिन</a>
             </div>
 
             <div class="pt-10 border-t border-slate-800 text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em]">
@@ -238,26 +203,18 @@
     </footer>
 
     <script>
+        // Initialize Lucide Icons
         lucide.createIcons();
-
-        // Mobile Menu
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
 
         // Sticky Navbar Effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('main-nav');
             if (window.scrollY > 100) {
                 nav.classList.add('nav-scrolled');
-                nav.classList.remove('py-6');
-                nav.classList.add('py-3');
+                nav.classList.replace('py-6', 'py-3');
             } else {
                 nav.classList.remove('nav-scrolled');
-                nav.classList.add('py-6');
-                nav.classList.remove('py-3');
+                nav.classList.replace('py-3', 'py-6');
             }
         });
 
