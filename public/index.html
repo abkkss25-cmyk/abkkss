@@ -53,6 +53,11 @@
           display: inline;
         }
 
+
+    @media (max-width: 1024px) {
+        body { padding-bottom: 4rem; }
+    }
+
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
@@ -91,16 +96,38 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="lg:hidden hidden flex-col bg-green-900 absolute top-full left-0 w-full p-8 space-y-6 shadow-2xl border-t border-green-800">
-            <a href="#" class="text-xl font-bold border-b border-green-800 pb-2">होम</a>
-            <a href="about_us.html" class="text-xl font-bold border-b border-green-800 pb-2">हमारे बारे में</a>
-            <a href="#vision" class="text-xl font-bold border-b border-green-800 pb-2">दृष्टिकोण</a>
-            <a href="#commitment" class="text-xl font-bold border-b border-green-800 pb-2">प्रतिबद्धता</a>
-            <a href="blog.html" class="text-xl font-bold border-b border-green-800 pb-2">ब्लॉग</a>
-            <a href="gallery.html" class="text-xl font-bold border-b border-green-800 pb-2">गैलरी</a>
-
-            <a href="admin.html" class="flex items-center gap-2 text-xl font-bold text-orange-400">Admin Panel <i data-lucide="external-link" class="h-4 w-4"></i></a>
+        <div class="lg:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-slate-200 flex items-center justify-around px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+    <a href="#" class="flex flex-col items-center justify-center text-green-700">
+        <i data-lucide="home" class="h-5 w-5"></i>
+        <span class="text-[10px] font-bold mt-1 uppercase">होम</span>
+    </a>
+    <a href="about_us.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
+        <i data-lucide="info" class="h-5 w-5"></i>
+        <span class="text-[10px] font-bold mt-1 uppercase">बारे में</span>
+    </a>
+    
+    <a href="register.html" class="relative -top-5 flex flex-col items-center justify-center">
+        <div class="bg-orange-500 p-4 rounded-full shadow-lg border-4 border-slate-50 text-white">
+            <i data-lucide="user-plus" class="h-6 w-6"></i>
         </div>
+        <span class="text-[10px] font-bold mt-1 text-orange-600 uppercase">रजिस्ट्रेशन</span>
+    </a>
+
+    <a href="gallery.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
+        <i data-lucide="image" class="h-5 w-5"></i>
+        <span class="text-[10px] font-bold mt-1 uppercase">गैलरी</span>
+    </a>
+    <a href="blog.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
+        <i data-lucide="book-open" class="h-5 w-5"></i>
+        <span class="text-[10px] font-bold mt-1 uppercase">ब्लॉग</span>
+    </a>
+    <a href="admin.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
+        <i data-lucide="book-open" class="h-5 w-5"></i>
+        <span class="text-[10px] font-bold mt-1 uppercase">Admin login</span>
+    </a>
+</div>
+
+
     </header>
 
     <section class="relative min-h-screen flex items-center justify-center text-center hero-bg px-4">
