@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // Correct Pathing for your structure:
-// Since server.js is in /api, we go up one level to find /public
+// server.js is inside /api → go up to /public
 const publicPath = path.join(__dirname, '../public');
 app.use(express.static(publicPath));
 
@@ -24,9 +25,29 @@ mongoose.connect(MONGO_URI)
     .then(() => console.log("✅ MongoDB Connected Successfully"))
     .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
-// --- SCHEMAS ---
+/* =======================
+   SCHEMAS & MODELS
+======================= */
 
-// Farmer Schema
+// --- Admin Schema ---
+const adminSchema = new mongoose.Schema({
+    username: { type: String, unique: true },
+    password: { type: String, required: true }
+});
+
+const Admin = mongoose.model('Admin', adminSchema);
+
+// Create default admin (one-time)
+(async () => {
+    const adminExists = await Admin.findOne({ username: 'admin' });
+    if (!adminExists) {
+        const hashed = await bcrypt.hash('admin123', 10);
+        await Admin.create({ username: 'admin', password: hashed });
+        console.log("🔐 Default admin created (username: admin, password: admin123)");
+    }
+})();
+
+// --- Farmer Schema ---
 const farmerSchema = new mongoose.Schema({
     name: { type: String, required: true },
     fatherName: String,
@@ -44,7 +65,7 @@ const farmerSchema = new mongoose.Schema({
     registeredAt: { type: Date, default: Date.now }
 });
 
-// Blog Schema
+// --- Blog Schema ---
 const blogSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
@@ -52,7 +73,7 @@ const blogSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-// Gallery Schema
+// --- Gallery Schema ---
 const gallerySchema = new mongoose.Schema({
     url: { type: String, required: true },
     title: { type: String, required: true },
@@ -63,69 +84,103 @@ const Farmer = mongoose.model('Farmer', farmerSchema);
 const Blog = mongoose.model('Blog', blogSchema);
 const Gallery = mongoose.model('Gallery', gallerySchema);
 
-// --- API ROUTES ---
+/* =======================
+   ADMIN AUTH ROUTES
+======================= */
 
-// FARMERS: Get and Post
+// 🔐 Admin Login
+app.post('/api/admin/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    const admin = await Admin.findOne({ username });
+    if (!admin) return res.status(401).json({ message: 'Invalid credentials' });
+
+    const match = await bcrypt.compare(password, admin.password);
+    if (!match) return res.status(401).json({ message: 'Invalid credentials' });
+
+    res.json({ message: 'Login success' });
+});
+
+// 🔄 Change Password
+app.put('/api/admin/update-password', async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+
+    const admin = await Admin.findOne({ username: 'admin' });
+    if (!admin) return res.status(404).json({ message: 'Admin not found' });
+
+    const match = await bcrypt.compare(oldPassword, admin.password);
+    if (!match) return res.status(401).json({ message: 'Old password incorrect' });
+
+    admin.password = await bcrypt.hash(newPassword, 10);
+    await admin.save();
+
+    res.json({ message: 'Password updated successfully' });
+});
+
+/* =======================
+   API ROUTES
+======================= */
+
+// FARMERS
 app.get('/api/farmers', async (req, res) => {
     try {
         const farmers = await Farmer.find().sort({ registeredAt: -1 });
         res.json(farmers);
-    } catch (error) {
+    } catch {
         res.status(500).json({ error: "डाटा प्राप्त करने में त्रुटि आई" });
     }
 });
 
 app.post('/api/farmers', async (req, res) => {
     try {
-        const newFarmer = new Farmer(req.body);
-        await newFarmer.save();
+        await new Farmer(req.body).save();
         res.status(201).json({ message: "Success" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// BLOGS: Get and Post
+// BLOGS
 app.get('/api/blogs', async (req, res) => {
     try {
         const blogs = await Blog.find().sort({ createdAt: -1 });
         res.json(blogs);
-    } catch (error) {
+    } catch {
         res.status(500).json({ error: "ब्लॉग लोड करने में त्रुटि आई" });
     }
 });
 
 app.post('/api/blogs', async (req, res) => {
     try {
-        const newBlog = new Blog(req.body);
-        await newBlog.save();
+        await new Blog(req.body).save();
         res.status(201).json({ message: "Blog Published" });
-    } catch (error) {
+    } catch {
         res.status(500).json({ error: "ब्लॉग सेव नहीं हो सका" });
     }
 });
 
-// GALLERY: Get and Post
+// GALLERY
 app.get('/api/gallery', async (req, res) => {
     try {
         const photos = await Gallery.find().sort({ createdAt: -1 });
         res.json(photos);
-    } catch (error) {
+    } catch {
         res.status(500).json({ error: "गैलरी लोड करने में त्रुटि आई" });
     }
 });
 
 app.post('/api/gallery', async (req, res) => {
     try {
-        const newPhoto = new Gallery(req.body);
-        await newPhoto.save();
+        await new Gallery(req.body).save();
         res.status(201).json({ message: "Photo added successfully" });
-    } catch (error) {
+    } catch {
         res.status(500).json({ error: "फोटो सेव नहीं हो सकी" });
     }
 });
 
-// --- PAGE ROUTING ---
+/* =======================
+   PAGE ROUTING
+======================= */
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'));
@@ -135,6 +190,7 @@ app.get('/:page', (req, res, next) => {
     let page = req.params.page;
     if (page.startsWith('api')) return next();
     if (!page.endsWith('.html')) page += '.html';
+
     const filePath = path.join(publicPath, page);
     if (fs.existsSync(filePath)) {
         res.sendFile(filePath);
@@ -143,9 +199,14 @@ app.get('/:page', (req, res, next) => {
     }
 });
 
-// --- SERVER START ---
+/* =======================
+   SERVER START
+======================= */
+
 if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+    app.listen(PORT, () =>
+        console.log(`🚀 Server running on http://localhost:${PORT}`)
+    );
 }
 
 module.exports = app;
