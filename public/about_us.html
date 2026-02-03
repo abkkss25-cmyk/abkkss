@@ -10,156 +10,145 @@
         @import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&display=swap');
         body { font-family: 'Hind', sans-serif; scroll-behavior: smooth; }
         .about-hero {
-            background-image: linear-gradient(rgba(21, 128, 61, 0.9), rgba(21, 128, 61, 0.9)), url('https://images.unsplash.com/photo-1595113316349-9fa4ee24f884?auto=format&fit=crop&q=80');
-            background-size: cover; background-position: center;
+            background-image: linear-gradient(rgba(21,128,61,0.9), rgba(21,128,61,0.9)),
+            url('https://images.unsplash.com/photo-1595113316349-9fa4ee24f884?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
         }
     </style>
 </head>
 <body class="bg-slate-50">
 
-    <header class="bg-green-700 py-4 px-4 text-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2">
-                <div class="bg-white p-1 rounded-lg"><i data-lucide="sprout" class="h-6 w-6 text-green-700"></i></div>
-                <h1 class="text-xl font-black uppercase">ABKKSS <span class="text-orange-400">समिति</span></h1>
-            </a>
-            <a href="index.html" class="bg-white/10 hover:bg-white/20 px-5 py-2 rounded-full font-bold text-xs uppercase tracking-widest border border-white/30">मुख्य पृष्ठ</a>
-        </div>
-    </header>
-
-    <section class="about-hero py-24 text-center text-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-5xl md:text-6xl font-black mb-4 uppercase">संस्था का परिचय</h2>
-            <p class="text-xl text-green-100 max-w-2xl mx-auto italic">"किसानों के उत्थान के लिए समर्पित, भारत की अपनी संस्था"</p>
-        </div>
-    </section>
-
-    <section class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80" class="rounded-[50px] shadow-2xl border-8 border-white" alt="NGO Work">
-                    <div class="absolute -bottom-8 -left-8 bg-orange-500 text-white p-8 rounded-3xl shadow-xl">
-                        <p class="text-4xl font-black">100%</p>
-                        <p class="text-xs font-bold uppercase tracking-widest">पारदर्शिता</p>
-                    </div>
-                </div>
-                <div>
-                    <span class="text-orange-500 font-black uppercase tracking-widest text-sm mb-4 block">हमारा इतिहास</span>
-                    <h3 class="text-4xl font-bold text-green-900 mb-6">किसानों की सेवा के संकल्प से <span class="text-orange-500">आज तक</span></h3>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
-                        अखिल भारतीय किसान कल्याण सेवा समिति (ABKKSS) की स्थापना ग्रामीण भारत के किसानों को सशक्त बनाने और उन्हें कृषि की आधुनिक एवं जैविक पद्धतियों से जोड़ने के उद्देश्य से की गई थी। अलीगढ़, उत्तर प्रदेश से शुरू हुआ यह सफर आज पूरे क्षेत्र में किसानों की आवाज़ बन चुका है।
-                    </p>
-                    <p class="text-gray-600 text-lg leading-relaxed mb-8">
-                        हमारा मानना है कि जब किसान समृद्ध होगा, तभी राष्ट्र समृद्ध होगा। हम न केवल कृषि बल्कि सामाजिक कल्याण, कन्या विवाह और ग्राम विकास के लिए निरंतर प्रयासरत हैं।
-                    </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white p-4 rounded-2xl shadow-md border-l-4 border-green-600">
-                            <p class="text-green-700 font-bold">पंजीकृत पता</p>
-                            <p class="text-xs text-gray-500">भाटौला, अलीगढ़ (U.P.)</p>
-                        </div>
-                        <div class="bg-white p-4 rounded-2xl shadow-md border-l-4 border-orange-500">
-                            <p class="text-orange-600 font-bold">कार्यक्षेत्र</p>
-                            <p class="text-xs text-gray-500">सम्पूर्ण भारत</p>
-                        </div>
-                    </div>
-                </div>
+<!-- HEADER -->
+<header class="bg-green-700 py-4 px-4 text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="bg-white p-1 rounded-lg">
+                <i data-lucide="sprout" class="h-6 w-6 text-green-700"></i>
             </div>
-        </div>
-    </section>
+            <h1 class="text-xl font-black uppercase">
+                ABKKSS <span class="text-orange-400">समिति</span>
+            </h1>
+        </a>
+        <a href="index.html"
+           class="bg-white/10 hover:bg-white/20 px-5 py-2 rounded-full font-bold text-xs uppercase tracking-widest border border-white/30">
+            मुख्य पृष्ठ
+        </a>
+    </div>
+</header>
 
-    <section class="py-20 bg-green-900 text-white overflow-hidden relative">
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center mb-16">
-                <h3 class="text-3xl font-bold uppercase tracking-tighter mb-4">वैधानिक विवरण एवं पंजीकरण</h3>
-                <p class="text-green-300">हम पूर्णतः भारत सरकार के नियमों के अधीन पंजीकृत संस्था हैं</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center">
-                    <div class="bg-orange-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="file-check" class="h-6 w-6"></i></div>
-                    <h4 class="font-bold text-xl mb-1">12A / 80G</h4>
-                    <p class="text-xs text-green-200">आयकर अधिनियम के तहत पंजीकृत (Tax Benefits)</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center">
-                    <div class="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="briefcase" class="h-6 w-6"></i></div>
-                    <h4 class="font-bold text-xl mb-1">NGO Darpan</h4>
-                    <p class="text-xs text-green-200">नीति आयोग (NITI Aayog) में सूचीबद्ध</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center">
-                    <div class="bg-green-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="credit-card" class="h-6 w-6"></i></div>
-                    <h4 class="font-bold text-xl mb-1">PAN Card</h4>
-                    <p class="text-xs text-green-200">संस्था का स्थायी खाता संख्या</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center">
-                    <div class="bg-purple-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="award" class="h-6 w-6"></i></div>
-                    <h4 class="font-bold text-xl mb-1">Reg. No.</h4>
-                    <p class="text-xs text-green-200">उत्तर प्रदेश सरकार द्वारा प्रमाणित</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="members" class="py-24 bg-slate-50">
+<!-- HERO -->
+<section class="about-hero py-24 text-center text-white">
     <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-            <span class="text-orange-500 font-black uppercase tracking-widest text-sm block mb-2">हमारी टीम</span>
-            <h2 class="text-4xl font-bold text-green-900 uppercase">समिति के मुख्य पदाधिकारी</h2>
-            <div class="h-1.5 w-20 bg-green-600 mx-auto mt-4 rounded-full"></div>
+        <h2 class="text-5xl md:text-6xl font-black mb-4 uppercase">संस्था का परिचय</h2>
+        <p class="text-xl text-green-100 max-w-2xl mx-auto italic">
+            "किसानों के उत्थान के लिए समर्पित, भारत की अपनी संस्था"
+        </p>
+    </div>
+</section>
+
+<!-- TEAM -->
+<section id="members" class="py-24 bg-slate-50">
+<div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+        <span class="text-orange-500 font-black uppercase tracking-widest text-sm block mb-2">
+            हमारी टीम
+        </span>
+        <h2 class="text-4xl font-bold text-green-900 uppercase">
+            समिति के मुख्य पदाधिकारी
+        </h2>
+        <div class="h-1.5 w-20 bg-green-600 mx-auto mt-4 rounded-full"></div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        
+        <!-- PRESIDENT -->
+        <div class="bg-white p-8 rounded-[40px] shadow-xl text-center border-t-8 border-orange-500">
+            <div class="w-32 h-32 bg-orange-100 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                <i data-lucide="user" class="h-16 w-16 text-orange-500"></i>
+            </div>
+            <h4 class="text-2xl font-bold text-green-900">Shiv Kumar Singh</h4>
+            <p class="text-orange-600 font-bold uppercase tracking-widest text-xs mb-4">
+                President (अध्यक्ष)
+            </p>
+            <a href="tel:9997353241"
+               class="inline-flex items-center gap-2 text-green-700 font-bold">
+                <i data-lucide="phone"></i> +91 99973 53241
+            </a>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto mb-20">
-            <div class="bg-white p-8 rounded-[40px] shadow-xl text-center border-t-8 border-orange-500 transform hover:-translate-y-2 transition-all">
-                <div class="w-32 h-32 bg-orange-100 rounded-2xl mx-auto mb-6 flex items-center justify-center overflow-hidden">
-                    <i data-lucide="user" class="h-16 w-16 text-orange-500"></i>
-                </div>
-                <h4 class="text-2xl font-bold text-green-900">Shiv Kumar Singh</h4>
-                <p class="text-orange-600 font-bold uppercase tracking-widest text-xs mb-4">President (अध्यक्ष)</p>
-                <div class="flex justify-center gap-3">
-                    <a href="tel:9997353241" class="p-2 bg-gray-100 rounded-full hover:bg-green-100 text-green-700 transition-colors"><i data-lucide="phone" class="h-4 w-4"></i></a>
-                    <a href="mailto:abkkss25@gmail.com" class="p-2 bg-gray-100 rounded-full hover:bg-blue-100 text-blue-700 transition-colors"><i data-lucide="mail" class="h-4 w-4"></i></a>
-                </div>
+        <!-- SECRETARY -->
+        <div class="bg-white p-8 rounded-[40px] shadow-xl text-center border-t-8 border-green-600">
+            <div class="w-32 h-32 bg-green-100 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                <i data-lucide="user" class="h-16 w-16 text-green-600"></i>
             </div>
+            <h4 class="text-2xl font-bold text-green-900">Shailendra Kumar</h4>
+            <p class="text-green-600 font-bold uppercase tracking-widest text-xs mb-4">
+                Secretary (सचिव)
+            </p>
+            <a href="tel:9719369846"
+               class="inline-flex items-center gap-2 text-green-700 font-bold">
+                <i data-lucide="phone"></i> +91 97193 69846
+            </a>
+        </div>
 
-            <div class="bg-white p-8 rounded-[40px] shadow-xl text-center border-t-8 border-green-600 transform hover:-translate-y-2 transition-all">
-                <div class="w-32 h-32 bg-green-100 rounded-2xl mx-auto mb-6 flex items-center justify-center overflow-hidden">
-                    <i data-lucide="user" class="h-16 w-16 text-green-600"></i>
-                </div>
-                <h4 class="text-2xl font-bold text-green-900">Shailendra Kumar</h4>
-                <p class="text-green-600 font-bold uppercase tracking-widest text-xs mb-4">Secretary (सचिव)</p>
-                <div class="flex justify-center gap-3">
-                    <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-green-100 text-green-700 transition-colors"><i data-lucide="phone" class="h-4 w-4"></i></a>
-                    <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-blue-100 text-blue-700 transition-colors"><i data-lucide="mail" class="h-4 w-4"></i></a>
-                </div>
+        <!-- TREASURER -->
+        <div class="bg-white p-8 rounded-[40px] shadow-xl text-center border-t-8 border-blue-500">
+            <div class="w-32 h-32 bg-blue-100 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                <i data-lucide="user" class="h-16 w-16 text-blue-500"></i>
             </div>
+            <h4 class="text-2xl font-bold text-green-900">Vijay Kumar Singh</h4>
+            <p class="text-blue-600 font-bold uppercase tracking-widest text-xs mb-4">
+                Treasurer (कोषाध्यक्ष)
+            </p>
+            <a href="tel:6398360835"
+               class="inline-flex items-center gap-2 text-green-700 font-bold">
+                <i data-lucide="phone"></i> +91 63983 60835
+            </a>
+        </div>
 
-            <div class="bg-white p-8 rounded-[40px] shadow-xl text-center border-t-8 border-blue-500 transform hover:-translate-y-2 transition-all">
-                <div class="w-32 h-32 bg-blue-100 rounded-2xl mx-auto mb-6 flex items-center justify-center overflow-hidden">
-                    <i data-lucide="user" class="h-16 w-16 text-blue-500"></i>
-                </div>
-                <h4 class="text-2xl font-bold text-green-900">Vijay Kumar Singh</h4>
-                <p class="text-blue-600 font-bold uppercase tracking-widest text-xs mb-4">Treasurer (कोषाध्यक्ष)</p>
-                <div class="flex justify-center gap-3">
-                    <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-green-100 text-green-700 transition-colors"><i data-lucide="phone" class="h-4 w-4"></i></a>
-                    <a href="#" class="p-2 bg-gray-100 rounded-full hover:bg-blue-100 text-blue-700 transition-colors"><i data-lucide="mail" class="h-4 w-4"></i></a>
-                </div>
-            </div>
+    </div>
+</div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-10">
+            <h3 class="text-3xl font-bold text-green-900">हमारा कार्यालय स्थान</h3>
+            <p class="text-gray-600 mt-2">
+                Village-Bhataula, Post-Shekhupur (Jalali), Aligarh, Uttar Pradesh – 202128
+            </p>
+        </div>
+
+        <div class="rounded-3xl overflow-hidden shadow-xl border">
+            <iframe
+                src="https://www.google.com/maps?q=Village%20Bhataula%20Post%20Shekhupur%20Jalali%20Aligarh%20Uttar%20Pradesh%20202128&output=embed"
+                class="w-full h-[450px] border-0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
     </div>
 </section>
 
-    <footer class="bg-slate-900 text-white py-12">
-        <div class="container mx-auto px-4 text-center">
-            <i data-lucide="sprout" class="h-10 w-10 text-green-500 mx-auto mb-4"></i>
-            <h4 class="text-xl font-bold">अखिल भारतीय किसान कल्याण सेवा समिति</h4>
-            <p class="text-slate-500 text-sm mt-2">ईमेल: abkkss25@gmail.com | फोन: +91 9997353241</p>
-            <div class="mt-8 pt-8 border-t border-slate-800 text-[10px] uppercase tracking-[0.4em] text-slate-600">
-                © 2026 ABKKSS समिति | सभी अधिकार सुरक्षित
-            </div>
+<!-- FOOTER -->
+<footer class="bg-slate-900 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+        <i data-lucide="sprout" class="h-10 w-10 text-green-500 mx-auto mb-4"></i>
+        <h4 class="text-xl font-bold">अखिल भारतीय किसान कल्याण सेवा समिति</h4>
+        <p class="text-slate-500 text-sm mt-2">
+            ईमेल: abkkss25@gmail.com | फोन: +91 99973 53241
+        </p>
+        <div class="mt-8 pt-8 border-t border-slate-800 text-[10px] uppercase tracking-[0.4em] text-slate-600">
+            © 2026 ABKKSS समिति | सभी अधिकार सुरक्षित
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script>
-        lucide.createIcons();
-    </script>
+<script>
+    lucide.createIcons();
+</script>
+
 </body>
 </html>
