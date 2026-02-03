@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="translate">
     <title>अखिल भारतीय किसान कल्याण सेवा समिति (ABKS)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -22,8 +21,9 @@
         /* Better Navbar glassmorphism */
         .nav-scrolled {
             background-color: rgba(21, 128, 61, 0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            backdrop-blur: 10px;
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
         }
 
         /* Clean Google Translate */
@@ -37,16 +37,6 @@
         }
         .goog-te-menu-value span { color: white !important; font-size: 13px !important; font-weight: 600 !important; }
         body { top: 0px !important; }
-
-        /* Multilingual Organization Name Logic */
-        .org-name .en { display: none; }
-        html[lang="en"] .org-name .hi { display: none; }
-        html[lang="en"] .org-name .en { display: inline; }
-
-        /* Prevent content overlap with bottom nav on mobile */
-        @media (max-width: 1024px) {
-            body { padding-bottom: 5rem; }
-        }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
@@ -68,45 +58,32 @@
                 <a href="#" class="hover:text-orange-400 transition-colors">होम</a>
                 <a href="about_us.html" class="hover:text-orange-400 transition-colors">हमारे बारे में</a>
                 <a href="#vision" class="hover:text-orange-400 transition-colors">दृष्टिकोण</a>
+                <a href="#mission" class="hover:text-orange-400 transition-colors">मिशन</a>
+                <a href="#commitment" class="hover:text-orange-400 transition-colors">प्रतिबद्धता</a>
                 <a href="blog.html" class="hover:text-orange-400 transition-colors">ब्लॉग</a>
-                <a href="gallery.html" class="hover:text-orange-400 transition-colors">गैलरी</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <div id="google_translate_element" class="hidden md:block"></div>
-                <a href="register.html" class="hidden md:block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-xl transition-all hover:-translate-y-1">
+                <a href="register.html" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-xl transition-all hover:-translate-y-1 active:scale-95">
                     रजिस्ट्रेशन
                 </a>
+                
+                <button id="menu-btn" class="lg:hidden p-2 bg-white/10 rounded-lg">
+                    <i data-lucide="menu" class="h-6 w-6"></i>
+                </button>
             </div>
         </div>
+
+        <div id="mobile-menu" class="lg:hidden hidden flex-col bg-green-900 absolute top-full left-0 w-full p-8 space-y-6 shadow-2xl border-t border-green-800">
+            <a href="#" class="text-xl font-bold border-b border-green-800 pb-2">होम</a>
+            <a href="about_us.html" class="text-xl font-bold border-b border-green-800 pb-2">हमारे बारे में</a>
+            <a href="#vision" class="text-xl font-bold border-b border-green-800 pb-2">दृष्टिकोण</a>
+            <a href="#commitment" class="text-xl font-bold border-b border-green-800 pb-2">प्रतिबद्धता</a>
+            <a href="blog.html" class="text-xl font-bold border-b border-green-800 pb-2">ब्लॉग</a>
+
+            <a href="admin.html" class="flex items-center gap-2 text-xl font-bold text-orange-400">Admin Panel <i data-lucide="external-link" class="h-4 w-4"></i></a>
+        </div>
     </header>
-
-    <div class="lg:hidden fixed bottom-0 left-0 z-50 w-full h-20 bg-white border-t border-slate-200 flex items-center justify-around px-2 shadow-[0_-4px_15px_rgba(0,0,0,0.1)]">
-        <a href="#" class="flex flex-col items-center justify-center text-green-700">
-            <i data-lucide="home" class="h-6 w-6"></i>
-            <span class="text-[10px] font-bold mt-1 uppercase">होम</span>
-        </a>
-        <a href="about_us.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
-            <i data-lucide="info" class="h-6 w-6"></i>
-            <span class="text-[10px] font-bold mt-1 uppercase">बारे में</span>
-        </a>
-        
-        <a href="register.html" class="relative -top-6 flex flex-col items-center justify-center">
-            <div class="bg-orange-500 p-4 rounded-full shadow-2xl border-4 border-slate-50 text-white">
-                <i data-lucide="user-plus" class="h-7 w-7"></i>
-            </div>
-            <span class="text-[10px] font-bold mt-1 text-orange-600 uppercase tracking-tighter">रजिस्ट्रेशन</span>
-        </a>
-
-        <a href="gallery.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
-            <i data-lucide="image" class="h-6 w-6"></i>
-            <span class="text-[10px] font-bold mt-1 uppercase">गैलरी</span>
-        </a>
-        <a href="admin.html" class="flex flex-col items-center justify-center text-slate-500 hover:text-green-700">
-            <i data-lucide="lock" class="h-6 w-6"></i>
-            <span class="text-[10px] font-bold mt-1 uppercase text-center leading-none">एडमिन<br>लॉगिन</span>
-        </a>
-    </div>
 
     <section class="relative min-h-screen flex items-center justify-center text-center hero-bg px-4">
         <div class="relative z-10 max-w-5xl">
@@ -143,7 +120,7 @@
                 <span class="text-orange-500 font-black tracking-widest uppercase text-sm block mb-4">हमारी संस्था</span>
                 <h2 class="text-5xl font-bold text-green-900 mb-8 leading-tight">किसानों के कल्याण के लिए समर्पित एक अभियान</h2>
                 <p class="text-gray-600 text-xl leading-relaxed mb-8">
-                    अखिल भारतीय किसान कल्याण सेवा समिति एक समर्पित संस्था है जो भारत के ग्रामीण अंचलों में जैविक और प्राकृतिक खेती को पुनर्जीवित करने के लिए कार्यरत है।
+                    अखिल भारतीय किसान कल्याण सेवा समिति एक समर्पित संस्था है जो भारत के ग्रामीण अंचलों में जैविक और प्राकृतिक खेती को पुनर्जीवित करने के लिए कार्यरत है। हमारा मुख्य उद्देश्य किसानों को आधुनिक तकनीकों और प्राचीन ज्ञान के संगम से सशक्त बनाना है।
                 </p>
                 <div class="flex items-center gap-4 text-green-800 font-bold">
                     <div class="p-3 bg-green-100 rounded-full"><i data-lucide="check" class="h-6 w-6"></i></div>
@@ -162,7 +139,7 @@
                         <i data-lucide="eye" class="h-8 w-8 text-white"></i>
                     </div>
                     <h3 class="text-3xl font-bold">दृष्टिकोण</h3>
-                    <p class="text-green-100 text-lg opacity-80">भारत को एक स्वावलंबी, समृद्ध और रसायन-मुक्त कृषि राष्ट्र बनाना।</p>
+                    <p class="text-green-100 text-lg opacity-80">भारत को एक स्वावलंबी, समृद्ध और रसायन-मुक्त कृषि राष्ट्र बनाना। हम चाहते हैं कि हर किसान अपनी मिट्टी को स्वस्थ रखे और आने वाली पीढ़ी को जहर मुक्त भोजन मिले।</p>
                 </div>
 
                 <div id="mission" class="space-y-6 p-4 lg:border-l lg:border-green-800 lg:pl-12">
@@ -172,6 +149,7 @@
                     <h3 class="text-3xl font-bold">हमारा मिशन</h3>
                     <ul class="space-y-5">
                         <li class="flex items-center gap-4 text-green-100"><i data-lucide="check-circle" class="text-orange-400"></i> जैविक खेती हेतु प्रेरणा</li>
+                        <li class="flex items-center gap-4 text-green-100"><i data-lucide="check-circle" class="text-orange-400"></i> प्राकृतिक खेती का विस्तार</li>
                         <li class="flex items-center gap-4 text-green-100"><i data-lucide="check-circle" class="text-orange-400"></i> किसानों की आय में 2X वृद्धि</li>
                     </ul>
                 </div>
@@ -181,7 +159,10 @@
                         <i data-lucide="users" class="h-8 w-8 text-white"></i>
                     </div>
                     <h3 class="text-3xl font-bold">प्रतिबद्धता</h3>
-                    <p class="text-green-100 text-lg opacity-80">हम युवा पीढ़ी को आधुनिक लेकिन प्राकृतिक कृषि से जोड़ने हेतु 24/7 समर्पित हैं।</p>
+                    <p class="text-green-100 text-lg opacity-80">हम युवा पीढ़ी को आधुनिक लेकिन प्राकृतिक कृषि से जोड़ने और शुद्ध खाद के उपयोग हेतु 24/7 समर्पित हैं।</p>
+                    <div class="pt-4">
+                        <span class="px-5 py-2 bg-white/10 rounded-full text-xs font-bold border border-white/20">#जागरूक_किसान</span>
+                    </div>
                 </div>
 
             </div>
@@ -192,10 +173,7 @@
         <div class="container mx-auto px-4 text-center">
             <div class="flex flex-col items-center mb-16">
                 <i data-lucide="sprout" class="h-16 w-16 text-green-500 mb-6"></i>
-                <h2 class="text-4xl font-black mb-4 uppercase org-name">
-                  <span class="hi" lang="hi">अखिल भारतीय किसान कल्याण सेवा समिति</span>
-                  <span class="en">Akhil Bhartiya Kisan Kalyan Seva Samiti</span>
-                </h2>
+                <h2 class="text-4xl font-black mb-4 uppercase">अखिल भारतीय किसान कल्याण सेवा समिति</h2>
                 <p class="text-orange-400 font-bold text-xl italic">"कृषि का मूल धर्म – प्रकृति के अनुरूप जीवन"</p>
             </div>
             
@@ -212,24 +190,30 @@
     </footer>
 
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Sticky Navbar Effect (Logic optimized to avoid padding errors)
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Navbar Effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('main-nav');
             if (window.scrollY > 100) {
                 nav.classList.add('nav-scrolled');
-                nav.style.paddingTop = "0.75rem";
-                nav.style.paddingBottom = "0.75rem";
+                nav.classList.remove('py-6');
+                nav.classList.add('py-3');
             } else {
                 nav.classList.remove('nav-scrolled');
-                nav.style.paddingTop = "1.5rem";
-                nav.style.paddingBottom = "1.5rem";
+                nav.classList.add('py-6');
+                nav.classList.remove('py-3');
             }
         });
 
-        // Google Translate Init
+        // Translate Init
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'hi',
