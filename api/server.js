@@ -199,6 +199,12 @@ app.get('/:page', (req, res, next) => {
     }
 });
 
+setTimeout(() => {
+    alert("Session expired!");
+    localStorage.removeItem("token");
+    location.reload();
+}, 10 * 60 * 1000); // 10 minutes
+
 /* =======================
    SERVER START
 ======================= */
