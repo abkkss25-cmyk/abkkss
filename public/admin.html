@@ -135,33 +135,41 @@
                 </div>
             </div>
 
-            <div id="section-blog" class="hidden">
-                <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                        <i data-lucide="pen-tool" class="text-green-600"></i> नया ब्लॉग पोस्ट करें
-                    </h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">ब्लॉग शीर्षक
-                                (Hindi/English)</label>
-                           <input id="blog-title" type="text" placeholder="उदाहरण: जैविक खेती के फायदे"
-                                class="w-full px-4 py-2 border rounded-lg">
-                                
-                                <textarea id="blog-content" rows="8" placeholder="यहाँ विस्तार से जानकारी लिखें..."
-                                class="w-full px-4 py-2 border rounded-lg"></textarea>
-                                
-                                <button onclick="publishBlog()"
-                                class="bg-green-600 text-white px-8 py-3 rounded-lg font-bold">
-                                पब्लिश करें
-                                </button>
-                    </div>
-                        <div class="mt-10">
-    <h3 class="text-xl font-bold mb-4">सभी ब्लॉग</h3>
-    <div id="admin-blog-list" class="space-y-4"></div>
-</div>
-                </div>
+<div id="section-blog" class="hidden">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
+        
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <i data-lucide="pen-tool" class="text-green-600"></i> नया ब्लॉग पोस्ट करें
+        </h2>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1">
+                    ब्लॉग शीर्षक (Hindi/English)
+                </label>
+                <input id="blog-title" type="text"
+                    class="w-full px-4 py-2 border rounded-lg">
             </div>
 
+            <div>
+                <textarea id="blog-content" rows="8"
+                    class="w-full px-4 py-2 border rounded-lg"></textarea>
+            </div>
+
+            <button onclick="publishBlog()"
+                class="bg-green-600 text-white px-8 py-3 rounded-lg font-bold">
+                पब्लिश करें
+            </button>
+        </div>
+
+        <!-- Blog List -->
+        <div class="mt-10">
+            <h3 class="text-xl font-bold mb-4">सभी ब्लॉग</h3>
+            <div id="admin-blog-list" class="space-y-4"></div>
+        </div>
+
+    </div>
+</div>
             <div id="section-gallery" class="hidden">
                 <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-md border border-gray-100">
                     <div class="flex items-center justify-between mb-6">
