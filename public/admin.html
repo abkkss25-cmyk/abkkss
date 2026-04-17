@@ -268,16 +268,22 @@
         // Tab Switching Logic
         function switchTab(tab) {
             const sections = ['data', 'blog', 'gallery', 'settings'];
+        
             sections.forEach(s => {
                 document.getElementById(`section-${s}`).classList.add('hidden');
                 document.getElementById(`tab-${s}`).classList.remove('active-tab', 'text-green-600');
                 document.getElementById(`tab-${s}`).classList.add('text-gray-500');
             });
-
+        
             document.getElementById(`section-${tab}`).classList.remove('hidden');
             document.getElementById(`tab-${tab}`).classList.add('active-tab', 'text-green-600');
             document.getElementById(`tab-${tab}`).classList.remove('text-gray-500');
-
+        
+            // ✅ LOAD BLOGS ONLY WHEN BLOG TAB OPENS
+            if (tab === 'blog') {
+                loadBlogs();
+            }
+        
             lucide.createIcons();
         }
 
@@ -507,10 +513,7 @@
                 alert('Server error');
             }
         }
-        if (tab === 'blog') {
-            loadBlogs();
-        }
-
+        
 
         function downloadCSV() {
             if (allFarmers.length === 0) return alert("डाटा उपलब्ध नहीं है");
